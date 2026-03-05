@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EatTogether - Order History &amp; Debt Analytics</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec5b",
+                        "primary-dark": "#0fa842",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102216",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a3324",
+                        "border-light": "#e7f3eb",
+                        "border-dark": "#2a4534",
+                        "text-main": "#0d1b12",
+                        "text-light": "#f0fdf4",
+                        "text-muted": "#4c9a66",
+                        "text-muted-dark": "#8fc7a3",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-main dark:text-text-light antialiased transition-colors duration-200">
+<div class="flex min-h-screen w-full flex-col">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 flex items-center justify-between border-b border-border-light dark:border-border-dark bg-surface-light/95 dark:bg-surface-dark/95 backdrop-blur px-6 py-4 md:px-10">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-text-main dark:text-text-light">
+<div class="size-8 text-primary">
+<svg class="h-full w-full" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M39.5563 34.1455V13.8546C39.5563 15.708 36.8773 17.3437 32.7927 18.3189C30.2914 18.916 27.263 19.2655 24 19.2655C20.737 19.2655 17.7086 18.916 15.2073 18.3189C11.1227 17.3437 8.44365 15.708 8.44365 13.8546V34.1455C8.44365 35.9988 11.1227 37.6346 15.2073 38.6098C17.7086 39.2069 20.737 39.5564 24 39.5564C27.263 39.5564 30.2914 39.2069 32.7927 38.6098C36.8773 37.6346 39.5563 35.9988 39.5563 34.1455Z" fill="currentColor"></path>
+<path clip-rule="evenodd" d="M10.4485 13.8519C10.4749 13.9271 10.6203 14.246 11.379 14.7361C12.298 15.3298 13.7492 15.9145 15.6717 16.3735C18.0007 16.9296 20.8712 17.2655 24 17.2655C27.1288 17.2655 29.9993 16.9296 32.3283 16.3735C34.2508 15.9145 35.702 15.3298 36.621 14.7361C37.3796 14.246 37.5251 13.9271 37.5515 13.8519C37.5287 13.7876 37.4333 13.5973 37.0635 13.2931C36.5266 12.8516 35.6288 12.3647 34.343 11.9175C31.79 11.0295 28.1333 10.4437 24 10.4437C19.8667 10.4437 16.2099 11.0295 13.657 11.9175C12.3712 12.3647 11.4734 12.8516 10.9365 13.2931C10.5667 13.5973 10.4713 13.7876 10.4485 13.8519ZM37.5563 18.7877C36.3176 19.3925 34.8502 19.8839 33.2571 20.2642C30.5836 20.9025 27.3973 21.2655 24 21.2655C20.6027 21.2655 17.4164 20.9025 14.7429 20.2642C13.1498 19.8839 11.6824 19.3925 10.4436 18.7877V34.1275C10.4515 34.1545 10.5427 34.4867 11.379 35.027C12.298 35.6207 13.7492 36.2054 15.6717 36.6644C18.0007 37.2205 20.8712 37.5564 24 37.5564C27.1288 37.5564 29.9993 37.2205 32.3283 36.6644C34.2508 36.2054 35.702 35.6207 36.621 35.027C37.4573 34.4867 37.5485 34.1546 37.5563 34.1275V18.7877ZM41.5563 13.8546V34.1455C41.5563 36.1078 40.158 37.5042 38.7915 38.3869C37.3498 39.3182 35.4192 40.0389 33.2571 40.5551C30.5836 41.1934 27.3973 41.5564 24 41.5564C20.6027 41.5564 17.4164 41.1934 14.7429 40.5551C12.5808 40.0389 10.6502 39.3182 9.20848 38.3869C7.84205 37.5042 6.44365 36.1078 6.44365 34.1455L6.44365 13.8546C6.44365 12.2684 7.37223 11.0454 8.39581 10.2036C9.43325 9.3505 10.8137 8.67141 12.343 8.13948C15.4203 7.06909 19.5418 6.44366 24 6.44366C28.4582 6.44366 32.5797 7.06909 35.657 8.13948C37.1863 8.67141 38.5667 9.3505 39.6042 10.2036C40.6278 11.0454 41.5563 12.2684 41.5563 13.8546Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-xl font-bold tracking-tight">EatTogether</h2>
+</div>
+<div class="hidden lg:flex w-full max-w-sm items-center rounded-lg bg-background-light dark:bg-background-dark border border-transparent focus-within:border-primary px-3 h-10 transition-colors">
+<span class="material-symbols-outlined text-text-muted dark:text-text-muted-dark" style="font-size: 20px;">search</span>
+<input class="w-full bg-transparent px-2 text-sm text-text-main dark:text-text-light placeholder:text-text-muted focus:outline-none" placeholder="Search orders, groups, or colleagues"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-sm font-medium text-text-muted hover:text-text-main dark:text-text-muted-dark dark:hover:text-text-light transition-colors" href="#">Dashboard</a>
+<a class="text-sm font-medium text-text-main dark:text-text-light" href="#">History</a>
+<a class="text-sm font-medium text-text-muted hover:text-text-main dark:text-text-muted-dark dark:hover:text-text-light transition-colors" href="#">Groups</a>
+</nav>
+<div class="h-6 w-px bg-border-light dark:bg-border-dark hidden md:block"></div>
+<button class="hidden sm:flex items-center justify-center rounded-lg bg-primary px-4 h-9 text-sm font-bold text-background-dark hover:bg-primary-dark transition-colors shadow-sm shadow-primary/20">
+                    New Order
+                </button>
+<div class="h-10 w-10 overflow-hidden rounded-full border border-border-light dark:border-border-dark" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDLSNTmb6yhJ_AeRAAwXFO4aibgGSmehjmzAqaSDVdtY9LtpaQB4dpjCxdhkvhhsfPJn3F9WzCIQTxNN_u-1Ns6Go4VCiUvd-MEydu_Qv1E0KLlLkRXODhQcbDzf2s3B6gtEqeu5K2dUGFav89UfypHcdUPdQVFNnPqO4lLuyIG7f1XsmFGVvVdd-EDSIeDA4KmXZu8ECFR8O-uGBF7vWExYpbbVnomcAmkG4uoQ6nPmm4gy_ret4O6ZvAQNBy885ZcdhXzM1UuoFw"); background-size: cover; background-position: center;'></div>
+</div>
+</header>
+<main class="flex-1 px-4 py-8 md:px-10 lg:px-40">
+<div class="mx-auto max-w-7xl">
+<!-- Header Section -->
+<div class="mb-10 flex flex-col gap-2">
+<h1 class="text-4xl font-black tracking-tight text-text-main dark:text-text-light">Order History &amp; Analytics</h1>
+<p class="text-lg text-text-muted dark:text-text-muted-dark">Track your spending, manage group debts, and settle up efficiently.</p>
+</div>
+<!-- Personal History Stats -->
+<section class="mb-12">
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-2xl font-bold tracking-tight text-text-main dark:text-text-light">Your Personal History</h2>
+<button class="text-sm font-semibold text-primary hover:underline flex items-center gap-1">
+                            View Full Report 
+                            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+<!-- Stat Card 1 -->
+<div class="group relative overflow-hidden rounded-xl bg-surface-light dark:bg-surface-dark p-6 border border-border-light dark:border-border-dark hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-md">
+<div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-background-dark transition-colors">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<p class="text-sm font-medium text-text-muted dark:text-text-muted-dark">Total Spent (YTD)</p>
+<p class="mt-2 text-3xl font-bold text-text-main dark:text-text-light">$452.50</p>
+<div class="absolute right-0 top-0 h-24 w-24 translate-x-8 translate-y--8 rounded-full bg-gradient-to-br from-primary/5 to-transparent blur-2xl"></div>
+</div>
+<!-- Stat Card 2 -->
+<div class="group relative overflow-hidden rounded-xl bg-surface-light dark:bg-surface-dark p-6 border border-border-light dark:border-border-dark hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-md">
+<div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-background-dark transition-colors">
+<span class="material-symbols-outlined">shopping_bag</span>
+</div>
+<p class="text-sm font-medium text-text-muted dark:text-text-muted-dark">Total Orders</p>
+<p class="mt-2 text-3xl font-bold text-text-main dark:text-text-light">34</p>
+</div>
+<!-- Stat Card 3 -->
+<div class="group relative overflow-hidden rounded-xl bg-surface-light dark:bg-surface-dark p-6 border border-border-light dark:border-border-dark hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-md">
+<div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-background-dark transition-colors">
+<span class="material-symbols-outlined">query_stats</span>
+</div>
+<p class="text-sm font-medium text-text-muted dark:text-text-muted-dark">Avg. Meal Cost</p>
+<p class="mt-2 text-3xl font-bold text-text-main dark:text-text-light">$13.30</p>
+</div>
+<!-- Stat Card 4 -->
+<div class="group relative overflow-hidden rounded-xl bg-surface-light dark:bg-surface-dark p-6 border border-border-light dark:border-border-dark hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-md">
+<div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-background-dark transition-colors">
+<span class="material-symbols-outlined">favorite</span>
+</div>
+<p class="text-sm font-medium text-text-muted dark:text-text-muted-dark">Most Ordered</p>
+<p class="mt-2 text-2xl font-bold text-text-main dark:text-text-light truncate">Spicy Pad Thai</p>
+</div>
+</div>
+</section>
+<!-- Analytics & Debt Tracker Split -->
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+<!-- Left Column: Table (Takes up 2/3 space on large screens) -->
+<div class="lg:col-span-2 flex flex-col gap-6">
+<div class="flex items-center justify-between">
+<h2 class="text-2xl font-bold tracking-tight text-text-main dark:text-text-light">Group Analytics</h2>
+<div class="flex gap-2">
+<button class="rounded-lg border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark px-3 py-1.5 text-xs font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 transition">
+                                    Weekly
+                                </button>
+<button class="rounded-lg bg-primary px-3 py-1.5 text-xs font-bold text-background-dark">
+                                    Monthly
+                                </button>
+</div>
+</div>
+<div class="overflow-hidden rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm">
+<thead class="bg-gray-50 dark:bg-gray-800/50 text-xs uppercase text-text-muted dark:text-text-muted-dark">
+<tr>
+<th class="px-6 py-4 font-semibold">Participant</th>
+<th class="px-6 py-4 font-semibold text-center">Orders Joined</th>
+<th class="px-6 py-4 font-semibold text-right">Last Order</th>
+<th class="px-6 py-4 font-semibold text-right">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-light dark:divide-border-dark">
+<!-- Row 1 -->
+<tr class="group hover:bg-gray-50/50 dark:hover:bg-gray-800/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-9 w-9 overflow-hidden rounded-full bg-gray-200" data-alt="Sarah Chen profile" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDq9RLIixGRonIpPXgHlP90OzQ646QWOLv-F2_NE9LEbYhx7zLn4mDdjG53EbGcrY-Acrl8v4ByrPhAV1En1mjnIATweOUAwzPguLReaA81t349e0qg8HY-grBaIzkKl_DvkGecNoETvZe9ecf4UH7QUW4wyjenuVLl8Rc08smjarfrkIQb45VB8oN8b4MdGIv3G9I7-owDUATGvxZKSPWPCu0MwGgQzULJZ-OTTLchD0y24g5ke4fr8QZdS3EUrLCtrQepr8HPrM0"); background-size: cover;'></div>
+<div>
+<p class="font-medium text-text-main dark:text-text-light">Sarah Chen</p>
+<p class="text-xs text-text-muted dark:text-text-muted-dark">Design Team</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-center font-medium">12</td>
+<td class="px-6 py-4 text-right text-text-muted dark:text-text-muted-dark">Today, 12:30 PM</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900/30 dark:text-green-300">
+                                                    Settled
+                                                </span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="group hover:bg-gray-50/50 dark:hover:bg-gray-800/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-9 w-9 overflow-hidden rounded-full bg-gray-200" data-alt="Michael Ross profile" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCTiuFJ4j92aNPEieyCgc_oSH3tlOXfc5WTEL8luieqlizh1yqJA39eq11DvgObp7931-mbaDsglwFafU0cLigHczhFs9gOGA6kp2PG47BOH9hm8szvE6LganzwpLkoJcwFMqFICeWXuJQ4p9QvBCj6NvFP4l1s8b9bpeAfqArU2eWuQshC6a2PFUBr1Sc4ip9ZiV2rrRY2_2BU_Tm03zws-zfaoKQm8-RZCr9fpt0Dhan0ctsFEoxEVxu-VChB7TgxKlorYwhfzIM"); background-size: cover;'></div>
+<div>
+<p class="font-medium text-text-main dark:text-text-light">Michael Ross</p>
+<p class="text-xs text-text-muted dark:text-text-muted-dark">Engineering</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-center font-medium">8</td>
+<td class="px-6 py-4 text-right text-text-muted dark:text-text-muted-dark">Yesterday</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300">
+                                                    Pending ($15.20)
+                                                </span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="group hover:bg-gray-50/50 dark:hover:bg-gray-800/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-background-dark font-bold text-xs">
+                                                        JD
+                                                    </div>
+<div>
+<p class="font-medium text-text-main dark:text-text-light">James Doe</p>
+<p class="text-xs text-text-muted dark:text-text-muted-dark">Product</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-center font-medium">15</td>
+<td class="px-6 py-4 text-right text-text-muted dark:text-text-muted-dark">Oct 24, 2023</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900/30 dark:text-green-300">
+                                                    Settled
+                                                </span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="group hover:bg-gray-50/50 dark:hover:bg-gray-800/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-9 w-9 overflow-hidden rounded-full bg-gray-200" data-alt="Emily Blunt profile" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCIC-wZJC-X4I3BC9Yzy_ZmTEXbWE_zz5zjeKRY7K0CAX26R0RM-BvYBlOEnFDYDWGBiME2uy1dUXR9T1sK_WGu-PFU5xi0fr9sKpbVkg08ql51Vai0Lgtm02QH5kUDOyBXg3Dr-22_SlHYzh9WJJXyizqSrd_TA_SESFF_xWxMS3dtpJCNrCzAj4EZas6By_ykupft6OunPq469_bT1w4W0JiBc29QZurf8ksNsCuzk-6U0Z90Jo2g7m44vgQdvlpOmSj5XddUYt0"); background-size: cover;'></div>
+<div>
+<p class="font-medium text-text-main dark:text-text-light">Emily Blunt</p>
+<p class="text-xs text-text-muted dark:text-text-muted-dark">Marketing</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-center font-medium">5</td>
+<td class="px-6 py-4 text-right text-text-muted dark:text-text-muted-dark">Oct 20, 2023</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800 dark:bg-red-900/30 dark:text-red-300">
+                                                    Overdue ($28.50)
+                                                </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="border-t border-border-light dark:border-border-dark px-6 py-4">
+<button class="text-sm font-semibold text-text-muted hover:text-primary dark:text-text-muted-dark dark:hover:text-primary transition-colors flex items-center justify-center w-full">
+                                    View All Participants
+                                </button>
+</div>
+</div>
+</div>
+<!-- Right Column: Debt Tracker Highlight (Takes up 1/3 space) -->
+<div class="flex flex-col gap-6">
+<h2 class="text-2xl font-bold tracking-tight text-text-main dark:text-text-light">Debt Tracker</h2>
+<div class="rounded-xl border border-red-100 bg-red-50/50 dark:border-red-900/30 dark:bg-red-900/10 p-6">
+<div class="flex items-center gap-3 mb-4">
+<div class="p-2 bg-red-100 dark:bg-red-900/50 rounded-lg text-red-600 dark:text-red-400">
+<span class="material-symbols-outlined">warning</span>
+</div>
+<h3 class="font-bold text-lg text-red-900 dark:text-red-200">Attention Needed</h3>
+</div>
+<p class="text-sm text-red-800/80 dark:text-red-300/80 mb-4">You have <span class="font-bold">2 outstanding payments</span> from colleagues totaling <span class="font-bold">$43.70</span>.</p>
+<div class="w-full h-1.5 bg-red-200 dark:bg-red-900/40 rounded-full mb-1">
+<div class="h-1.5 bg-red-500 rounded-full" style="width: 65%"></div>
+</div>
+<div class="flex justify-between text-xs text-red-700 dark:text-red-400 mt-1">
+<span>Collected: $125.00</span>
+<span>Pending: $43.70</span>
+</div>
+</div>
+<div class="rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark shadow-sm flex-1 flex flex-col">
+<div class="p-5 border-b border-border-light dark:border-border-dark">
+<h3 class="font-bold text-text-main dark:text-text-light">Top Debtors</h3>
+<p class="text-xs text-text-muted dark:text-text-muted-dark mt-1">Colleagues who haven't settled yet</p>
+</div>
+<div class="flex-1 overflow-y-auto p-2">
+<!-- Debtor Item -->
+<div class="flex items-center justify-between p-3 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg transition-colors group">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 overflow-hidden rounded-full bg-gray-200" data-alt="Emily Blunt profile" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBgnk2ULvX5jm_ub3etbadCquYH2sYlu9QaLpzHMb6bx-fGGpyH4MZXTAMZSeZcT0hSTOTkXE6AI_WKqC2maxs7JBsOGcFY9JsxI4RtsBA7xJasQFKFdtJKTnreBprNeKX3kQ1W__gI88EhMkXNS9-qXBi3T_F_1FAuF8RFP_UmXYsSgDx48yk-pXSSRYcTb5hTQWbrM5VKvORGspOr7PikE8xTqzHxc9NjtJwR1RsqlKKcsOR9w4HZ_5kbyUDh1bKG0EZvAXB5i7Y"); background-size: cover;'></div>
+<div>
+<p class="text-sm font-bold text-text-main dark:text-text-light">Emily Blunt</p>
+<p class="text-xs text-red-500 font-medium">Owes $28.50</p>
+</div>
+</div>
+<button class="opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity rounded-md bg-primary/10 px-3 py-1.5 text-xs font-bold text-primary hover:bg-primary hover:text-background-dark">
+                                        Remind
+                                    </button>
+</div>
+<!-- Debtor Item -->
+<div class="flex items-center justify-between p-3 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg transition-colors group">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 overflow-hidden rounded-full bg-gray-200" data-alt="Michael Ross profile" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBIFojQoiNK-pcL-9_igJNA2TV2TouzHeb5eATPm6abx6AZM_6kLNZByX-8Xt1Z01ooSJbveppELhnG-ogb4-5kLa1FlCVb1JYqtHTufG9JyB03g2Qq8KS6gzP2lV7RRRPoKadKwc5Zc4H0wliMc2JXLaM2djpmUUt9IICOPHQbVNm-3IvI5AVd1sUUEGpkeBSi245ZUsnxUvJ_5wvUY8v0jJVm_cYdEfpEXDzQECVV-MUY1xK_NGDCGFO8yQ2zxoPyDiTh432D36U"); background-size: cover;'></div>
+<div>
+<p class="text-sm font-bold text-text-main dark:text-text-light">Michael Ross</p>
+<p class="text-xs text-yellow-600 dark:text-yellow-500 font-medium">Owes $15.20</p>
+</div>
+</div>
+<button class="opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity rounded-md bg-primary/10 px-3 py-1.5 text-xs font-bold text-primary hover:bg-primary hover:text-background-dark">
+                                        Remind
+                                    </button>
+</div>
+<!-- Debtor Item (Settled but recent) -->
+<div class="flex items-center justify-between p-3 opacity-60 hover:opacity-100 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg transition-all group">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 overflow-hidden rounded-full bg-gray-200 grayscale" data-alt="Alex T profile" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDVf8w3jATL8ZZ7vukKOhqK2kEGYI2atN8mp5zC-EOVyCshITECpUXBn4PlXGzpwQFpR7M_4WN69sxIoCnayflbk9qGXF82rN80rK0tHkEEeos0lJHwelhLUDnBHQvEsPKAdnN2wUsdcMDLvxTGlOMMJomuwUO8g4oMvRiDWqIZNcy50ekvNDFKUQWuGoKrRlOz0j3MInOKF3rHo3aPZaDM4WsF_h5dj5oI4YN54sF1h6QqfrGrLEXMghHlpRQAPa9LvLADquRorBA"); background-size: cover;'></div>
+<div>
+<p class="text-sm font-bold text-text-main dark:text-text-light">Alex T.</p>
+<p class="text-xs text-green-600 dark:text-green-500 font-medium">Settled just now</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-green-500 text-lg">check_circle</span>
+</div>
+</div>
+<div class="p-4 border-t border-border-light dark:border-border-dark bg-gray-50 dark:bg-gray-800/30 rounded-b-xl">
+<button class="w-full rounded-lg bg-text-main dark:bg-text-light text-surface-light dark:text-surface-dark py-2 text-sm font-bold shadow hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">send</span>
+                                    Remind All
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

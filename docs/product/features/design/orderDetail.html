@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bill Splitting &amp; QR Payment - EatGo</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#65b500", // Extracted green from the screenshot
+                        "primary-dark": "#4a8500",
+                        "background-light": "#f4f7f6",
+                        "background-dark": "#1a1a1a",
+                        "card-light": "#ffffff",
+                        "card-dark": "#262626",
+                        "text-light": "#333333",
+                        "text-dark": "#e5e5e5",
+                        "border-light": "#e5e7eb",
+                        "border-dark": "#404040",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                    },
+                },
+            },
+        };
+    </script>
+<style>.toggle-checkbox:checked {
+            right: 0;
+            border-color: #65b500;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #65b500;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark font-body min-h-screen transition-colors duration-300">
+<nav class="bg-card-light dark:bg-card-dark shadow-sm border-b border-border-light dark:border-border-dark sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between h-16">
+<div class="flex items-center">
+<a class="flex-shrink-0 flex items-center" href="#">
+<span class="text-primary font-bold text-2xl tracking-tight">eatgo<span class="text-black dark:text-white">.</span></span>
+</a>
+<div class="hidden sm:ml-8 sm:flex sm:space-x-8">
+<a class="border-transparent text-gray-500 dark:text-gray-400 hover:border-primary hover:text-primary inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" href="#">Dashboard</a>
+<a class="border-primary text-gray-900 dark:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" href="#">Current Order</a>
+<a class="border-transparent text-gray-500 dark:text-gray-400 hover:border-primary hover:text-primary inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" href="#">History</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none" id="theme-toggle">
+<span class="material-icons-round text-gray-600 dark:text-gray-300">dark_mode</span>
+</button>
+<div class="hidden md:flex items-center space-x-2">
+<span class="text-sm text-gray-600 dark:text-gray-300">Host: <span class="font-semibold text-gray-900 dark:text-white">Sarah Jenkins</span></span>
+<img alt="Profile" class="h-8 w-8 rounded-full border border-gray-200 dark:border-gray-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9b6V6So1D7KQitFvlu2xRwiMJShHsFrMGnwQoxnXCyFnnso4Bv4gH_qL1h8vICrbSLs-PoeMaRSnb6u5m_6Q9Aojpflxo7_1W3W6UAEdDj37wcnG1Ivi7LElJvLIVUr1wR-c75oWFasZ4GewxwfzmWREM3fgVLraVVVkztb0XPu2fifVsuSHJX-_NNHMv7nDfGitL44ahxc_dUMqeZzaz8uFIT02rnaU198LoJEqn5dJzElDKbxwcxaalB8YiGTXg9k7SSHLdRv8"/>
+</div>
+</div>
+</div>
+</div>
+</nav>
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="md:flex md:items-center md:justify-between mb-8">
+<div class="flex-1 min-w-0">
+<h2 class="text-2xl font-bold leading-7 text-gray-900 dark:text-white sm:text-3xl sm:truncate">
+                    Lunch Order: McDonald's (Fillmore)
+                </h2>
+<div class="mt-1 flex flex-col sm:flex-row sm:flex-wrap sm:mt-0 sm:space-x-6">
+<div class="mt-2 flex items-center text-sm text-gray-500 dark:text-gray-400">
+<span class="material-icons-round mr-1.5 text-lg text-gray-400">schedule</span>
+                        Ordered Today at 11:30 AM
+                    </div>
+<div class="mt-2 flex items-center text-sm text-gray-500 dark:text-gray-400">
+<span class="material-icons-round mr-1.5 text-lg text-gray-400">people</span>
+                        5 Participants
+                    </div>
+<div class="mt-2 flex items-center text-sm text-green-600 dark:text-green-400 font-medium">
+<span class="material-icons-round mr-1.5 text-lg">check_circle</span>
+                        Order Delivered
+                    </div>
+</div>
+</div>
+<div class="mt-4 flex md:mt-0 md:ml-4 gap-3">
+<button class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-card-dark hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary" type="button">
+<span class="material-icons-round mr-2 text-lg">receipt_long</span>
+                    View Receipt
+                </button>
+<button class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary" type="button">
+<span class="material-icons-round mr-2 text-lg">share</span>
+                    Share Link
+                </button>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<div class="lg:col-span-2 space-y-6">
+<div class="bg-card-light dark:bg-card-dark shadow rounded-lg overflow-hidden border border-border-light dark:border-border-dark">
+<div class="px-6 py-5 border-b border-border-light dark:border-border-dark flex justify-between items-center">
+<h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">
+                            Bill Split Details
+                        </h3>
+<div class="text-sm text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full">
+                            Delivery Fee Share: <span class="font-bold text-gray-800 dark:text-white">$0.60/person</span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+<thead class="bg-gray-50 dark:bg-gray-800">
+<tr>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider" scope="col">
+                                        Member
+                                    </th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider w-1/3" scope="col">
+                                        Items
+                                    </th>
+<th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider" scope="col">
+                                        Subtotal
+                                    </th>
+<th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider" scope="col">
+                                        Fees
+                                    </th>
+<th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider" scope="col">
+                                        Total
+                                    </th>
+<th class="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider" scope="col">
+                                        Status
+                                    </th>
+</tr>
+</thead>
+<tbody class="bg-white dark:bg-card-dark divide-y divide-gray-200 dark:divide-gray-700">
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-10 w-10">
+<img alt="John" class="h-10 w-10 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC18q_jt9cNehZVMl4fPWx-ANJ2reaMncb4evcJM0XzxvFdwIk7NvgDl_2NqF-60utZxZ7BLsHbtHjLrL1xCBiaa7--KtgBwz-VMvys_1-FS_3xwP6auP3Tx4ZIq59KTVxQZnBO3ZeBkAPDD4IYmbU8lQxo0AFECQREpaT7AMV24aX17cBHZ0_3vOlMJ4a2BBtlJiZqvPcCSFhRjCt1_awZgfvIBIYVbQPrhq0L3SdSCh-5fE_mFpRKnr__Zg9tEWvivW0CFEqr2Iw"/>
+</div>
+<div class="ml-4">
+<div class="text-sm font-medium text-gray-900 dark:text-white">John Doe</div>
+<div class="text-xs text-gray-500 dark:text-gray-400">@johnd</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="text-sm text-gray-900 dark:text-white">Big Mac Meal</div>
+<div class="text-xs text-gray-500 dark:text-gray-400">Large Fries, Coke</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500 dark:text-gray-400">
+                                        $12.50
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500 dark:text-gray-400">
+                                        $0.60
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-primary">
+                                        $13.10
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer border-gray-300 dark:border-gray-600 focus:ring-0" id="toggle1" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 dark:bg-gray-700 cursor-pointer" for="toggle1"></label>
+</div>
+</td>
+</tr>
+<tr class="bg-green-50/50 dark:bg-green-900/10">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-10 w-10 relative">
+<img alt="Sarah" class="h-10 w-10 rounded-full border-2 border-primary" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_6tyBKD_QnKnMWSY7FSMcmvb_kqIjZL6IO7pKnb1O3uGx14axivQ0yrAqSUs1xSaLztQeiIw9MoKzlnrqX5E0iraGlJM4QW13a1dAOxshD1hq_Cqubx8N_q4Ac5JtPm3oz5JF6pXvc49OWQgWHClmZiusZhHPrQxZQE3Yj3WDg4-7muork8LfJ9rCYH8HQ07uxejfY4ZN9moxv56iGewh7v01oTCCu7SJfLhrmAPMDgh17j4gLckhH5vp_8PWfMZcklEvlFO1-OI"/>
+<span class="absolute -top-1 -right-1 bg-primary text-white text-[10px] px-1 rounded-sm shadow-sm">HOST</span>
+</div>
+<div class="ml-4">
+<div class="text-sm font-medium text-gray-900 dark:text-white">Sarah Jenkins</div>
+<div class="text-xs text-gray-500 dark:text-gray-400">You</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="text-sm text-gray-900 dark:text-white">McChicken Sandwich</div>
+<div class="text-xs text-gray-500 dark:text-gray-400">No mayo</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500 dark:text-gray-400">
+                                        $5.49
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500 dark:text-gray-400">
+                                        $0.60
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-primary">
+                                        $6.09
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100">
+                                            PAID
+                                        </span>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-10 w-10">
+<img alt="Michael" class="h-10 w-10 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKnMCeMNH_O_rD11Cv2OqL_2lV6VQjiBPc6OlWaTkiIY8bzbAyJVofB_w8vAKpwPo4F2Bbf029zbxtSY4-_yVs2_VyVmF-VcodUGopjEFY3HNo4RIteCE_Tc2jC20fV9hZBgrviueolXN-behX_Ve-v0VzIKUMrkJgqLImRq7nmudItIx9JQvQI490Nsem3186R73snTJAGFN0xpCkPK9GMFBiqBNXnsUXwx0LLS_h3ZcldxF3MHSXuYuP4DpJjmRj8ZnTEf2qaY8"/>
+</div>
+<div class="ml-4">
+<div class="text-sm font-medium text-gray-900 dark:text-white">Michael Smith</div>
+<div class="text-xs text-gray-500 dark:text-gray-400">@mike_s</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="text-sm text-gray-900 dark:text-white">Filet-O-Fish Meal</div>
+<div class="text-xs text-gray-500 dark:text-gray-400">Sprite</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500 dark:text-gray-400">
+                                        $11.20
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500 dark:text-gray-400">
+                                        $0.60
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-primary">
+                                        $11.80
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer border-gray-300 dark:border-gray-600 focus:ring-0" id="toggle3" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 dark:bg-gray-700 cursor-pointer" for="toggle3"></label>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-10 w-10">
+<img alt="Emily" class="h-10 w-10 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_JPon5japuyg0DKDNPKMcs1KfIcHFWbcw6l3T4Cin0_GSuWjyPxYZ7mrOuiaBp7GblWVO2eFJaN7ohl313a2gMkbYPTTbWcgzuSSqoRNm6miIYURyNvKjbOmpx3Sn-JEwzj2Q85mFAK_hfY7NqlsFgw2N8YNK-K5xlmEVXLNl8v49qghj7f8UIivvqZDJnPSNvYWJ2dPHxhqE9qjRv4lmV7-S_7zKB-6ghI2bIEwruy6XCNzjKBfmUtDYsy7hf7AJeSKqdTRxREA"/>
+</div>
+<div class="ml-4">
+<div class="text-sm font-medium text-gray-900 dark:text-white">Emily Chen</div>
+<div class="text-xs text-gray-500 dark:text-gray-400">@emily_c</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="text-sm text-gray-900 dark:text-white">10 McNuggets</div>
+<div class="text-xs text-gray-500 dark:text-gray-400">BBQ Sauce</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500 dark:text-gray-400">
+                                        $6.99
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500 dark:text-gray-400">
+                                        $0.60
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-primary">
+                                        $7.59
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer border-gray-300 dark:border-gray-600 focus:ring-0" id="toggle4" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 dark:bg-gray-700 cursor-pointer" for="toggle4"></label>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-10 w-10">
+<img alt="David" class="h-10 w-10 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIolhjmfhnH9nJVVekTGtLnEL8KHv3H0dD3nTYduxmh2ItCYk055lj-pMhnRucIMVRRyx2VVo5YJNTuX-lkLP5CawLHB5VVvAXIvTfHW_6-CoY2BTQsR9k-73C1joZiygGkrsowbGNnJGrsyGcbP4vfqe4-nXyb_V_VfGQgK8bFwSBXfpVThhWgtS8nQwZ-OSviR3d4taOq1xnb5UA8tUOB6HAiyzevUN3G-wSG-rb_A0CLGnWRKWOKLq-15JV1U-q1pTC7ozbpqQ"/>
+</div>
+<div class="ml-4">
+<div class="text-sm font-medium text-gray-900 dark:text-white">David Kim</div>
+<div class="text-xs text-gray-500 dark:text-gray-400">@davidk</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="text-sm text-gray-900 dark:text-white">Quarter Pounder w/ Cheese</div>
+<div class="text-xs text-gray-500 dark:text-gray-400">No onions</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500 dark:text-gray-400">
+                                        $8.20
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500 dark:text-gray-400">
+                                        $0.60
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-primary">
+                                        $8.80
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer border-gray-300 dark:border-gray-600 focus:ring-0" id="toggle5" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 dark:bg-gray-700 cursor-pointer" for="toggle5"></label>
+</div>
+</td>
+</tr>
+</tbody>
+<tfoot class="bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+<tr>
+<td class="px-6 py-4 text-right text-sm font-medium text-gray-500 dark:text-gray-400" colspan="4">
+                                        Total Order Value
+                                    </td>
+<td class="px-6 py-4 text-right text-lg font-bold text-gray-900 dark:text-white">
+                                        $47.38
+                                    </td>
+<td></td>
+</tr>
+</tfoot>
+</table>
+</div>
+</div>
+<div class="mt-8 flex justify-end">
+<button class="inline-flex items-center px-6 py-3 border border-gray-300 dark:border-gray-600 shadow-sm text-base font-medium rounded-md text-gray-700 dark:text-gray-200 bg-white dark:bg-card-dark hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary" type="button">
+<span class="material-icons-round mr-2">analytics</span>
+                        View Payment History &amp; Debtor Stats
+                    </button>
+</div>
+</div>
+<div class="space-y-6">
+<div class="bg-card-light dark:bg-card-dark shadow rounded-lg p-6 border border-border-light dark:border-border-dark flex flex-col items-center text-center">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Scan to Pay Host</h3>
+<p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Use your banking app to scan the VietQR code below.</p>
+<div class="bg-white p-4 rounded-xl border-2 border-primary shadow-sm mb-6 relative">
+<img alt="VietQR Payment Code for Sarah Jenkins" class="w-48 h-48" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFHiV3Him-XEk-No5--dwMr_NHNhwWtVFF_9iHiN57t4OyjrTN7BM6KmfjEtDHuEEvdaOsy2JWMNw4m9jL490fZ_RIePby1WTjblOv-5LRm5tGgIC69HCl5xJ7LGryGQaS0_SVQC6tHIdtOpgmxgKdYA_J9ZX5nb84WqyVoaj2nl0OKafMY9R3XmPvwHdPGTuZ0pyHEAaXAq5quCorA_e24dOMVAui0n9OeLy4wgSDkf4pQLS-6G9fyzYlNMUepfx_iaGvsnvhSSk"/>
+<div class="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-primary text-white text-xs px-2 py-1 rounded-full font-bold">VietQR</div>
+</div>
+<div class="w-full text-left bg-gray-50 dark:bg-gray-800 rounded-lg p-4 mb-4">
+<div class="flex justify-between items-center mb-2">
+<span class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide font-semibold">Bank</span>
+<span class="text-sm font-medium text-gray-900 dark:text-white">Vietcombank</span>
+</div>
+<div class="flex justify-between items-center mb-2">
+<span class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide font-semibold">Account Name</span>
+<span class="text-sm font-medium text-gray-900 dark:text-white">SARAH JENKINS</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide font-semibold">Account No.</span>
+<div class="flex items-center">
+<span class="text-sm font-medium text-gray-900 dark:text-white mr-2">0011 2233 4455</span>
+<button class="text-primary hover:text-primary-dark cursor-pointer">
+<span class="material-icons-round text-base">content_copy</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark shadow rounded-lg p-6 border border-border-light dark:border-border-dark">
+<h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Collection Progress</h3>
+<div class="relative pt-1">
+<div class="flex mb-2 items-center justify-between">
+<div>
+<span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-green-600 bg-green-200 dark:bg-green-900 dark:text-green-300">
+                                    Paid
+                                </span>
+</div>
+<div class="text-right">
+<span class="text-xs font-semibold inline-block text-green-600 dark:text-green-400">
+                                    $26.69 / $47.38
+                                </span>
+</div>
+</div>
+<div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-green-100 dark:bg-gray-700">
+<div class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-primary" style="width: 56%"></div>
+</div>
+</div>
+<div class="mt-4 grid grid-cols-2 gap-4">
+<div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-md text-center">
+<div class="text-2xl font-bold text-gray-900 dark:text-white">3</div>
+<div class="text-xs text-gray-500 dark:text-gray-400 uppercase font-medium">Paid</div>
+</div>
+<div class="bg-red-50 dark:bg-red-900/20 p-3 rounded-md text-center">
+<div class="text-2xl font-bold text-red-600 dark:text-red-400">2</div>
+<div class="text-xs text-red-500 dark:text-red-400 uppercase font-medium">Unpaid</div>
+</div>
+</div>
+<button class="w-full mt-4 flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-primary bg-green-100 hover:bg-green-200 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors">
+<span class="material-icons-round mr-2 text-lg">notifications</span>
+                        Remind Unpaid
+                    </button>
+</div>
+<div class="bg-gradient-to-br from-primary to-primary-dark rounded-lg p-6 text-white shadow-lg">
+<h3 class="font-bold text-lg mb-2">Need Help?</h3>
+<p class="text-sm text-green-100 mb-4">Issues with payment or order? Contact support directly.</p>
+<button class="w-full bg-white text-primary font-bold py-2 px-4 rounded shadow hover:bg-gray-100 transition duration-200">
+                        Contact Support
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<footer class="bg-card-light dark:bg-card-dark border-t border-border-light dark:border-border-dark mt-12">
+<div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 md:flex md:items-center md:justify-between lg:px-8">
+<div class="flex justify-center space-x-6 md:order-2">
+<a class="text-gray-400 hover:text-gray-500" href="#">
+<span class="sr-only">Facebook</span>
+<svg aria-hidden="true" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+<path clip-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" fill-rule="evenodd"></path>
+</svg>
+</a>
+<a class="text-gray-400 hover:text-gray-500" href="#">
+<span class="sr-only">Twitter</span>
+<svg aria-hidden="true" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+<path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path>
+</svg>
+</a>
+</div>
+<div class="mt-8 md:mt-0 md:order-1">
+<p class="text-center text-base text-gray-400">© 2023 EatGo Inc. All rights reserved.</p>
+</div>
+</div>
+</footer>
+<script>
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = themeToggleBtn.querySelector('span');
+        // Check local storage or system preference
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            themeIcon.textContent = 'light_mode';
+        } else {
+            document.documentElement.classList.remove('dark');
+            themeIcon.textContent = 'dark_mode';
+        }
+        themeToggleBtn.addEventListener('click', function() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+                themeIcon.textContent = 'dark_mode';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+                themeIcon.textContent = 'light_mode';
+            }
+        });
+    </script>
+
+</body></html>

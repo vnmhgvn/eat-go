@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EatGo - Group Order Host View</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#65B703", 
+                        secondary: "#1A1A1A",
+                        "background-light": "#F8F9FA",
+                        "background-dark": "#121212",
+                        "card-light": "#FFFFFF",
+                        "card-dark": "#1E1E1E",
+                        "text-light": "#1A1A1A",
+                        "text-dark": "#E5E5E5",
+                        "muted-light": "#6B7280",
+                        "muted-dark": "#9CA3AF",
+                    },
+                    fontFamily: {
+                        display: ["Poppins", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                        'xl': "0.75rem",
+                    },
+                },
+            },
+        };
+    </script>
+<style>::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 20px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background-color: #4b5563;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark transition-colors duration-200 min-h-screen flex flex-col">
+<nav class="sticky top-0 z-50 bg-card-light dark:bg-card-dark shadow-sm border-b border-gray-100 dark:border-gray-800">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between h-16 items-center">
+<div class="flex items-center gap-2">
+<span class="text-2xl font-bold tracking-tight text-primary">eatgo<span class="text-black dark:text-white">.</span></span>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex items-center gap-2 text-sm text-muted-light dark:text-muted-dark bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full">
+<span class="material-symbols-outlined text-base">account_circle</span>
+<span>Host: <strong>Sarah J.</strong></span>
+</div>
+<button class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" onclick="document.documentElement.classList.toggle('dark')">
+<span class="material-symbols-outlined">dark_mode</span>
+</button>
+<button class="bg-black text-white dark:bg-white dark:text-black px-4 py-2 rounded font-medium text-sm hover:opacity-90 transition-opacity">
+                        Log Out
+                    </button>
+</div>
+</div>
+</div>
+</nav>
+<main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+<div class="mb-8">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+<div>
+<h1 class="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
+                        Burger Joint (Downtown)
+                        <span class="text-sm font-medium bg-primary/10 text-primary px-3 py-1 rounded-full border border-primary/20">Group Order</span>
+</h1>
+<p class="mt-1 text-muted-light dark:text-muted-dark flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">schedule</span>
+                        Order Deadline: <span class="font-semibold text-red-500">10:30 AM (15 mins left)</span>
+</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 px-4 py-2.5 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all font-medium shadow-sm">
+<span class="material-symbols-outlined text-primary">content_copy</span>
+                        Copy Link
+                    </button>
+<button class="flex items-center gap-2 bg-primary text-white px-5 py-2.5 rounded-lg hover:bg-opacity-90 transition-all font-medium shadow-md shadow-primary/20">
+<span class="material-symbols-outlined">share</span>
+                        Share Link
+                    </button>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
+<div class="relative">
+<div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-gray-200 dark:bg-gray-700">
+<div class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-primary" style="width: 33%"></div>
+</div>
+<div class="flex justify-between text-sm font-medium">
+<div class="text-primary flex flex-col items-center">
+<span>Open for Orders</span>
+<span class="text-xs font-normal text-muted-light dark:text-muted-dark mt-1">Collecting requests</span>
+</div>
+<div class="text-muted-light dark:text-muted-dark flex flex-col items-center opacity-50">
+<span>Locked</span>
+<span class="text-xs font-normal mt-1">Reviewing final bill</span>
+</div>
+<div class="text-muted-light dark:text-muted-dark flex flex-col items-center opacity-50">
+<span>Delivered</span>
+<span class="text-xs font-normal mt-1">Enjoy your meal!</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<div class="lg:col-span-7 space-y-6">
+<div class="bg-white dark:bg-card-dark rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-5">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-bold text-lg text-gray-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">flash_on</span> Quick Add Item
+                         </h3>
+<span class="text-xs text-muted-light dark:text-muted-dark bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">Host Only</span>
+</div>
+<div class="flex flex-col sm:flex-row gap-3">
+<div class="flex-grow">
+<input class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 text-sm focus:border-primary focus:ring-primary dark:text-white dark:placeholder-gray-400" placeholder="Dish Name (e.g., Daily Special)" type="text"/>
+</div>
+<div class="w-full sm:w-32 relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
+<input class="w-full pl-7 rounded-lg border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 text-sm focus:border-primary focus:ring-primary dark:text-white dark:placeholder-gray-400" placeholder="0.00" type="number"/>
+</div>
+<button class="bg-primary hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg text-sm transition-colors whitespace-nowrap shadow-sm">
+                            Add to Menu
+                        </button>
+</div>
+<div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700">
+<details class="group">
+<summary class="flex items-center gap-2 cursor-pointer text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors select-none">
+<span class="material-symbols-outlined transition-transform group-open:rotate-90 text-xl">arrow_right</span>
+<span class="material-symbols-outlined text-lg">save_alt</span>
+                                Import from Saved Menus
+                            </summary>
+<div class="mt-3 pl-2">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<button class="text-left p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary bg-gray-50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800 transition-all group/btn">
+<div class="font-medium text-gray-900 dark:text-white text-sm group-hover/btn:text-primary">Taco Tuesday List</div>
+<div class="text-xs text-muted-light dark:text-muted-dark mt-0.5">12 items • Last used 1 week ago</div>
+</button>
+<button class="text-left p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary bg-gray-50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800 transition-all group/btn">
+<div class="font-medium text-gray-900 dark:text-white text-sm group-hover/btn:text-primary">Office Pizza Party</div>
+<div class="text-xs text-muted-light dark:text-muted-dark mt-0.5">8 items • Last used 1 month ago</div>
+</button>
+<button class="text-left p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary bg-gray-50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800 transition-all group/btn">
+<div class="font-medium text-gray-900 dark:text-white text-sm group-hover/btn:text-primary">Sushi Lunch</div>
+<div class="text-xs text-muted-light dark:text-muted-dark mt-0.5">24 items • Last used 2 months ago</div>
+</button>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="flex items-center justify-between mt-8">
+<h2 class="text-xl font-bold text-gray-900 dark:text-white">Current Menu</h2>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-gray-400 text-lg">search</span>
+</span>
+<input class="pl-9 pr-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm focus:ring-primary focus:border-primary w-64 text-gray-900 dark:text-gray-100 placeholder-gray-400" placeholder="Search menu items..." type="text"/>
+</div>
+</div>
+<div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+<button class="px-4 py-2 bg-primary text-white rounded-full text-sm font-medium whitespace-nowrap">Popular</button>
+<button class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 rounded-full text-sm font-medium hover:border-primary hover:text-primary whitespace-nowrap transition-colors">Burgers</button>
+<button class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 rounded-full text-sm font-medium hover:border-primary hover:text-primary whitespace-nowrap transition-colors">Sides</button>
+<button class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 rounded-full text-sm font-medium hover:border-primary hover:text-primary whitespace-nowrap transition-colors">Drinks</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="bg-card-light dark:bg-card-dark rounded-xl p-4 border border-gray-100 dark:border-gray-800 hover:shadow-md transition-shadow flex flex-col justify-between h-full group">
+<div class="flex gap-4">
+<img alt="Classic Cheeseburger" class="w-24 h-24 object-cover rounded-lg bg-gray-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAyu12PR90VT7pR70EiANWXIg0OTBRa_doAwDcps08sd1Xh2jvjN0jtlI6pWWhIsK6PcBxBA_IrIFBoj7K59RubCbeOf0XMn3ExRqTCinjtzBap2pMfDKh6QWGsTZfz0B7xP_QVuofoJNmzF6vLXkBPseJULyHdbM6z2eGwbxBCndQLFUXbsb5WBsNvzU6k3vJnadGYmHQMUjH5CNwpuopVVXaFE7ppr_Hca1CsjPg4qH6C48ebfOCFsMzhqohon3PBxP9ZpS152I"/>
+<div>
+<h3 class="font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">Classic Cheeseburger</h3>
+<p class="text-xs text-muted-light dark:text-muted-dark mt-1 line-clamp-2">Angus beef patty, cheddar cheese, lettuce, tomato, house sauce.</p>
+<div class="mt-2 font-bold text-lg text-gray-900 dark:text-white">$12.50</div>
+</div>
+</div>
+<button class="mt-4 w-full py-2 border border-primary text-primary dark:text-primary rounded-lg text-sm font-medium hover:bg-primary hover:text-white transition-colors flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-sm">add</span> Add to Basket
+                        </button>
+</div>
+<div class="bg-card-light dark:bg-card-dark rounded-xl p-4 border border-gray-100 dark:border-gray-800 hover:shadow-md transition-shadow flex flex-col justify-between h-full group">
+<div class="flex gap-4">
+<img alt="Bacon BBQ Burger" class="w-24 h-24 object-cover rounded-lg bg-gray-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTuuUYK5irailAtFyuJXIRv_PEYtFGO3N_2x_lbCdEm9ZarsU1ZAD-lAL3SiR6AAYVf3Dgz5f4y89LaNu3c4sRH80BUmEidXQTiOe1L6kC3kiJRRMloCOPby3mfRW5-66u6Mw4D0FFRVlIHaXC6wlVgMeNrXOnNUgcB8OSX3jPRFJtYKN9-UVBCgANNJPZ1jRQTtqQK4KgV2kciAWpskQ2RR_23ECwv07nEI1w80nLdleMJDctCypY8K7C70n009xzTm9loxGVKVE"/>
+<div>
+<h3 class="font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">Bacon BBQ Burger</h3>
+<p class="text-xs text-muted-light dark:text-muted-dark mt-1 line-clamp-2">Crispy bacon, onion rings, BBQ sauce, cheddar.</p>
+<div class="mt-2 font-bold text-lg text-gray-900 dark:text-white">$14.00</div>
+</div>
+</div>
+<button class="mt-4 w-full py-2 border border-primary text-primary dark:text-primary rounded-lg text-sm font-medium hover:bg-primary hover:text-white transition-colors flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-sm">add</span> Add to Basket
+                        </button>
+</div>
+<div class="bg-card-light dark:bg-card-dark rounded-xl p-4 border border-gray-100 dark:border-gray-800 hover:shadow-md transition-shadow flex flex-col justify-between h-full group">
+<div class="flex gap-4">
+<img alt="Pepperoni Pizza" class="w-24 h-24 object-cover rounded-lg bg-gray-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2U1THxYZWDX0Vcz7l3me5vuhCgG75GZOEcZg2IEjBtbl837MEzpxxWEFmGJgK1k-gN9avUn1x8fWZEG3akpUpqaQT10QSIg6kB-syrB8YneIhfBHsxTFxJPZwagD4sq5HnfTxZJYTSMFRt2lt5kt6plVobztC8NDMYvq17tE0V5sLDFjNDK01YeZkNJ14lHWxxmJJh9DhdL6UKPSd3z5I11TYRKC4LvA-yUqGrY97Unz7Zh5NNGqmr78ciAF6zguKN-0iQFi06xI"/>
+<div>
+<h3 class="font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">Spicy Chicken Sandwich</h3>
+<p class="text-xs text-muted-light dark:text-muted-dark mt-1 line-clamp-2">Fried chicken breast, pickles, spicy mayo, brioche bun.</p>
+<div class="mt-2 font-bold text-lg text-gray-900 dark:text-white">$11.50</div>
+</div>
+</div>
+<button class="mt-4 w-full py-2 border border-primary text-primary dark:text-primary rounded-lg text-sm font-medium hover:bg-primary hover:text-white transition-colors flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-sm">add</span> Add to Basket
+                        </button>
+</div>
+<div class="bg-card-light dark:bg-card-dark rounded-xl p-4 border border-gray-100 dark:border-gray-800 hover:shadow-md transition-shadow flex flex-col justify-between h-full group">
+<div class="flex gap-4">
+<img alt="Truffle Fries" class="w-24 h-24 object-cover rounded-lg bg-gray-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRW5ebPzT8knl02dEYFqozcS--mfS79AVg45YL8UgEAWRN9ko2M4Q7JV69o0Us_pmz-wIfV3g2CRPfRUIL6je-U8sJ_xaPC_LarZz-z8-PT6ETcH7cJRrX3XdZV8KYi169NFM5uyE2b69mshWq0eQHVelAFcgHsIz1NIIfuqbnrXSCcxOnSWtdsWtVEJMUXOMy7kp4j0mOOsCXnh99xx1HATn57z66_DG5EQwsU1EPve4m3878MP_pfffEjW7vNt4z0785MJEOmig"/>
+<div>
+<h3 class="font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">Truffle Parmesan Fries</h3>
+<p class="text-xs text-muted-light dark:text-muted-dark mt-1 line-clamp-2">Hand-cut fries tossed with truffle oil and parmesan.</p>
+<div class="mt-2 font-bold text-lg text-gray-900 dark:text-white">$6.50</div>
+</div>
+</div>
+<button class="mt-4 w-full py-2 border border-primary text-primary dark:text-primary rounded-lg text-sm font-medium hover:bg-primary hover:text-white transition-colors flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-sm">add</span> Add to Basket
+                        </button>
+</div>
+</div>
+</div>
+<div class="lg:col-span-5">
+<div class="bg-card-light dark:bg-card-dark rounded-xl shadow-lg border border-gray-100 dark:border-gray-800 sticky top-24 overflow-hidden flex flex-col max-h-[calc(100vh-8rem)]">
+<div class="p-5 border-b border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/50">
+<div class="flex justify-between items-center mb-2">
+<h2 class="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">groups</span>
+                                Group Basket
+                            </h2>
+<span class="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs px-2 py-1 rounded font-medium">3 Joined</span>
+</div>
+<div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 mt-2">
+<div class="bg-primary h-1.5 rounded-full" style="width: 45%"></div>
+</div>
+<p class="text-xs text-muted-light dark:text-muted-dark mt-1 text-right">$45.00 / $100 min for free delivery</p>
+</div>
+<div class="flex-grow overflow-y-auto p-5 space-y-6">
+<div class="relative pl-4 border-l-2 border-primary">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<div class="h-6 w-6 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-xs font-bold">SJ</div>
+<p class="text-sm font-semibold text-gray-900 dark:text-white">Sarah J. (You)</p>
+</div>
+<button class="text-xs text-primary hover:underline">Edit</button>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-start text-sm">
+<div class="flex gap-2">
+<span class="text-muted-light dark:text-muted-dark font-medium">1x</span>
+<div>
+<span class="text-gray-800 dark:text-gray-200">Classic Cheeseburger</span>
+<div class="text-xs text-muted-light dark:text-muted-dark italic mt-0.5">Note: No onions please</div>
+</div>
+</div>
+<span class="font-medium text-gray-900 dark:text-white">$12.50</span>
+</div>
+<div class="flex justify-between items-start text-sm">
+<div class="flex gap-2">
+<span class="text-muted-light dark:text-muted-dark font-medium">1x</span>
+<div>
+<span class="text-gray-800 dark:text-gray-200">Diet Coke</span>
+</div>
+</div>
+<span class="font-medium text-gray-900 dark:text-white">$2.50</span>
+</div>
+</div>
+</div>
+<div class="relative pl-4 border-l-2 border-gray-200 dark:border-gray-700">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<div class="h-6 w-6 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center text-xs font-bold">MK</div>
+<p class="text-sm font-semibold text-gray-900 dark:text-white">Mike K.</p>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-start text-sm">
+<div class="flex gap-2">
+<span class="text-muted-light dark:text-muted-dark font-medium">1x</span>
+<div>
+<span class="text-gray-800 dark:text-gray-200">Bacon BBQ Burger</span>
+</div>
+</div>
+<span class="font-medium text-gray-900 dark:text-white">$14.00</span>
+</div>
+</div>
+</div>
+<div class="relative pl-4 border-l-2 border-gray-200 dark:border-gray-700">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<div class="h-6 w-6 rounded-full bg-pink-100 text-pink-600 flex items-center justify-center text-xs font-bold">AL</div>
+<p class="text-sm font-semibold text-gray-900 dark:text-white">Amy L.</p>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-start text-sm">
+<div class="flex gap-2">
+<span class="text-muted-light dark:text-muted-dark font-medium">1x</span>
+<div>
+<span class="text-gray-800 dark:text-gray-200">Spicy Chicken Sandwich</span>
+<div class="text-xs text-muted-light dark:text-muted-dark italic mt-0.5">Note: Extra spicy sauce on side</div>
+</div>
+</div>
+<span class="font-medium text-gray-900 dark:text-white">$11.50</span>
+</div>
+<div class="flex justify-between items-start text-sm">
+<div class="flex gap-2">
+<span class="text-muted-light dark:text-muted-dark font-medium">1x</span>
+<div>
+<span class="text-gray-800 dark:text-gray-200">Truffle Parmesan Fries</span>
+</div>
+</div>
+<span class="font-medium text-gray-900 dark:text-white">$6.50</span>
+</div>
+</div>
+</div>
+</div>
+<div class="p-5 bg-white dark:bg-card-dark border-t border-gray-100 dark:border-gray-800 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-10">
+<div class="space-y-2 mb-4">
+<div class="flex justify-between text-sm text-muted-light dark:text-muted-dark">
+<span>Subtotal</span>
+<span>$47.00</span>
+</div>
+<div class="flex justify-between text-sm text-muted-light dark:text-muted-dark">
+<span>Tax &amp; Fees (est.)</span>
+<span>$8.45</span>
+</div>
+<div class="flex justify-between text-base font-bold text-gray-900 dark:text-white pt-2 border-t border-gray-100 dark:border-gray-700">
+<span>Group Total</span>
+<span>$55.45</span>
+</div>
+</div>
+<button class="w-full bg-primary hover:bg-opacity-90 text-white font-bold py-3 px-4 rounded-xl shadow-lg shadow-primary/30 transition-all transform active:scale-[0.98] flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">lock</span>
+                            Close Order &amp; Split Bill
+                        </button>
+<p class="text-center text-xs text-muted-light dark:text-muted-dark mt-2">
+                            This will lock the order for everyone.
+                        </p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="bg-white dark:bg-card-dark border-t border-gray-100 dark:border-gray-800 py-8 mt-auto">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<span class="text-lg font-bold text-primary">eatgo.</span>
+<p class="text-sm text-muted-light dark:text-muted-dark">© 2023 EatGo Inc. Group Orders made simple.</p>
+</div>
+</footer>
+
+</body></html>

@@ -1,0 +1,167 @@
+{
+  "feature": "LunchOrder — Internal Group Food Ordering System",
+  "epic_id": "EPIC-01",
+  "started_at": "2026-03-05T11:39:21+07:00",
+  "last_updated_at": "2026-03-05T12:55:00+07:00",
+  "plan_version": "1.0",
+  "overall_status": "completed",
+  "tasks": {
+    "T1": {
+      "name": "Document Analysis & Epic/Feature Standardization",
+      "status": "done",
+      "agent": "orchestrator",
+      "last_updated_at": "2026-03-05T12:00:00+07:00",
+      "artifacts": [
+        "docs/product/epics/epic-01-lunchorder.md",
+        "docs/product/features/epic-01-lunchorder/F-001-auth-user-profile.md",
+        "docs/product/features/epic-01-lunchorder/F-002-restaurant-menu.md",
+        "docs/product/features/epic-01-lunchorder/F-003-order-session.md",
+        "docs/product/features/epic-01-lunchorder/F-004-voting-system.md",
+        "docs/product/features/epic-01-lunchorder/F-005-order-items-toppings.md",
+        "docs/product/features/epic-01-lunchorder/F-006-bill-splitting.md",
+        "docs/product/features/epic-01-lunchorder/F-007-vietqr-payment.md"
+      ]
+    },
+    "T2": {
+      "name": "Architecture Design & ADR (Inline — no separate ADR needed for MVP)",
+      "status": "done",
+      "agent": "orchestrator",
+      "last_updated_at": "2026-03-05T12:00:00+07:00",
+      "note": "Architecture decisions captured in implementation_plan.md and feature specs. ADR documents deferred to Phase 2."
+    },
+    "T3": {
+      "name": "Project Setup & Foundation",
+      "status": "done",
+      "agent": "fullstack-mvp-specialist",
+      "last_updated_at": "2026-03-05T12:55:00+07:00",
+      "artifacts": [
+        "projects/lunchorder/src/lib/supabase/server.ts",
+        "projects/lunchorder/src/lib/supabase/client.ts",
+        "projects/lunchorder/src/lib/db/schema.ts",
+        "projects/lunchorder/src/lib/db/index.ts",
+        "projects/lunchorder/middleware.ts",
+        "projects/lunchorder/drizzle.config.ts",
+        "projects/lunchorder/.env.local.example",
+        "projects/lunchorder/vitest.config.ts"
+      ]
+    },
+    "T4": {
+      "name": "F-001: Authentication & User Profile",
+      "status": "done",
+      "agent": "fullstack-mvp-specialist",
+      "last_updated_at": "2026-03-05T12:55:00+07:00"
+    },
+    "T5": {
+      "name": "F-002: Restaurant & Menu Management",
+      "status": "done",
+      "agent": "fullstack-mvp-specialist",
+      "last_updated_at": "2026-03-05T12:55:00+07:00"
+    },
+    "T6": {
+      "name": "F-003: Order Session Lifecycle",
+      "status": "done",
+      "agent": "fullstack-mvp-specialist",
+      "last_updated_at": "2026-03-05T12:55:00+07:00"
+    },
+    "T7": {
+      "name": "F-004: Voting System",
+      "status": "done",
+      "agent": "fullstack-mvp-specialist",
+      "last_updated_at": "2026-03-05T12:55:00+07:00"
+    },
+    "T8": {
+      "name": "F-005: Order Items & Topping Selection",
+      "status": "done",
+      "agent": "fullstack-mvp-specialist",
+      "last_updated_at": "2026-03-05T12:55:00+07:00"
+    },
+    "T9": {
+      "name": "F-006: Bill Splitting & Calculation",
+      "status": "done",
+      "agent": "fullstack-mvp-specialist",
+      "last_updated_at": "2026-03-05T12:55:00+07:00"
+    },
+    "T10": {
+      "name": "F-007: VietQR Payment Tracking",
+      "status": "done",
+      "agent": "fullstack-mvp-specialist",
+      "last_updated_at": "2026-03-05T12:55:00+07:00"
+    },
+    "T11": {
+      "name": "Dashboard, Share Page, App Shell",
+      "status": "done",
+      "agent": "fullstack-mvp-specialist",
+      "last_updated_at": "2026-03-05T12:55:00+07:00"
+    },
+    "T12": {
+      "name": "Testing — Unit tests",
+      "status": "done",
+      "agent": "orchestrator",
+      "last_updated_at": "2026-03-05T12:55:00+07:00",
+      "result": "9/9 unit tests pass (calculateEqualSplit, calculateByItemSplit, buildVietQRUrl)"
+    },
+    "T13": {
+      "name": "TypeScript Check",
+      "status": "done",
+      "agent": "orchestrator",
+      "last_updated_at": "2026-03-05T12:55:00+07:00",
+      "result": "tsc --noEmit exits 0, no TypeScript errors"
+    },
+    "T14": {
+      "name": "Docs Update & Wrap-up",
+      "status": "done",
+      "agent": "orchestrator",
+      "last_updated_at": "2026-03-05T12:55:00+07:00",
+      "artifacts": [
+        "docs/product/CHANGELOG.md"
+      ]
+    },
+    "T15": {
+      "name": "Bug 01: Fix Database Error Saving New User",
+      "status": "done",
+      "agent": "debugging-specialist",
+      "last_updated_at": "2026-03-05T14:35:00+07:00",
+      "artifacts": [
+        "docs/product/bugs/bug-01-auth-failed.md"
+      ]
+    },
+    "T16": {
+      "name": "Bug 02: Fix Database Connection Hostname Parsing Error",
+      "status": "done",
+      "agent": "debugging-specialist",
+      "last_updated_at": "2026-03-05T14:55:00+07:00",
+      "artifacts": [
+        "docs/product/bugs/bug-02-db-connection.md"
+      ]
+    },
+    "T17": {
+      "name": "Bug 03: Fix invalid UUID syntax error on sessions/new",
+      "status": "done",
+      "agent": "debugging-specialist",
+      "last_updated_at": "2026-03-05T15:20:00+07:00",
+      "artifacts": [
+        "docs/product/bugs/bug-03-session-new.md"
+      ]
+    },
+    "T18": {
+      "name": "Bug 04: Fix Drizzle ORM query error in sessions/new",
+      "status": "done",
+      "agent": "debugging-specialist",
+      "last_updated_at": "2026-03-05T17:05:00+07:00",
+      "artifacts": [
+        "docs/product/bugs/bug-04-restaurants-query.md"
+      ]
+    }
+  },
+  "completed_artifacts": [
+    "projects/lunchorder/ (Next.js 15 project)",
+    "docs/product/epics/epic-01-lunchorder.md",
+    "docs/product/features/epic-01-lunchorder/ (7 feature specs)",
+    "docs/product/CHANGELOG.md"
+  ],
+  "blockers": [
+    "User needs to fill in .env.local from .env.local.example with actual Supabase credentials",
+    "User needs to configure Google OAuth in Supabase dashboard",
+    "User needs to run Drizzle migrations: npx drizzle-kit push (after adding DATABASE_URL)"
+  ]
+}
